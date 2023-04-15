@@ -17,6 +17,7 @@
     <bean class="com.example.beanPostProcessor.InjectBeanPostProcessor"/>
     <bean class="com.example.postProcessors.logBeanFactoryPostProcessors"/>
     <bean class="com.example.postProcessors.verifyBeanFactoryPostProcessors"/>
+    <bean class="com.example.beanPostProcessor.TransactionBeanPostProcessor"/>
     <bean class="com.example.pools.ConnectionPool" id="pool1">
         <constructor-arg name="username" type="java.lang.String" value="${db.username}"/>
         <constructor-arg name="poolSize" value="${db.pool.size}" type="java.lang.Integer"/>
@@ -42,6 +43,6 @@
     <bean id="driver" class="java.lang.String">
         <constructor-arg type="java.lang.String" value="${db.driver}"/>
     </bean>
-    <bean name="userRepository" class="com.example.repos.UserRepository"/>
+    <bean name="companyRepository" class="com.example.repos.CompanyRepository"/>
 
 </beans>
