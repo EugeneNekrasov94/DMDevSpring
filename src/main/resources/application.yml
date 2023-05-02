@@ -1,0 +1,38 @@
+db:
+  username  : postgres
+  password : postgres
+  pool:
+    size : 12
+    timeout: 1
+  driver : PostgresDriver
+  url : postgres:5432
+  hosts : localhost:127.0.0.1
+  usernameTest  : EVGEN
+  pools:
+    - size: 1
+      timeout: 10
+    - size: 5
+      timeout: 50
+  properties:
+    first: 123
+    second: 456
+    third: 789
+
+logging:
+  level:
+    root: info
+    com.example.database.repos.CompanyRepository: info
+  file:
+    name: evgen.log
+    path: /
+spring:
+  datasource:
+    username: postgres
+    password: postgres
+    url: jdbc:postgresql://localhost:5432/postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true

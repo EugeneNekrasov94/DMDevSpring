@@ -1,18 +1,15 @@
 package com.example;
 
-import com.example.pools.ConnectionPool;
-import com.example.repos.CRUDRepository;
-import com.example.repos.CompanyRepository;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
+import org.springframework.context.ConfigurableApplicationContext;
 
+@SpringBootApplication
+@ConfigurationPropertiesScan
 public class ApplicationRunner {
     public static void main(String[] args) {
-        CRUDRepository companyRepository;
-        try (ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("config.xml")) {
-            ConnectionPool bean = context.getBean("pool1", ConnectionPool.class);
-            System.out.println(bean);
-            companyRepository = context.getBean("companyRepository", CRUDRepository.class);
-            System.out.println(companyRepository.findById(1));
-        }
+        ConfigurableApplicationContext configurableApplicationContext = SpringApplication.run(ApplicationRunner.class, args);
+        System.out.println(configurableApplicationContext.getBean("pool2"));
     }
 }

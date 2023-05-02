@@ -1,13 +1,18 @@
 package com.example.beanPostProcessor;
 
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.support.BeanDefinitionDsl;
+import org.springframework.stereotype.Component;
 import org.springframework.util.ReflectionUtils;
 
 import java.util.Arrays;
-
+@Component
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class InjectBeanPostProcessor implements BeanPostProcessor, ApplicationContextAware {
     private ApplicationContext applicationContext;
     @Override

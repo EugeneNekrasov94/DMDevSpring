@@ -1,19 +1,18 @@
 package com.example.beanPostProcessor;
 
-import lombok.extern.log4j.Log4j2;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.simple.SimpleLoggerContextFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.stereotype.Component;
 
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.HashMap;
 import java.util.Map;
 
-@Log4j2
-public class TransactionBeanPostProcessor implements BeanPostProcessor {
-    Logger logger = org.apache.logging.log4j.core.Logger.
 
+@Component
+public class TransactionBeanPostProcessor implements BeanPostProcessor {
     private final Map<String,Class<?>> taBeans = new HashMap<>();
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
@@ -26,16 +25,17 @@ public class TransactionBeanPostProcessor implements BeanPostProcessor {
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         Class<?> beanClass = taBeans.get(beanName);
-
         if (beanClass != null) {
-            return Proxy.newProxyInstance(beanClass.getClassLoader(), beanClass.getInterfaces(), (proxy, method, args) -> {
-                log.info("Open transaction!");
-                try {
-                    method.invoke(bean,args);
-                } finally {
-                    log.info("Close TA!");
+            return Proxy.newProxyInstance(beanClass.getClassLoader(), beanClass.getInterfaces(), new InvocationHandler() {
+                @Override
+                public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+                    System.out.println("Open transaction!");
+                    try {
+                        return method.invoke(bean, args);
+                    } finally {
+                        System.out.println("Close TA!");
+                    }
                 }
-                return bean;
             });
         }
         return bean;

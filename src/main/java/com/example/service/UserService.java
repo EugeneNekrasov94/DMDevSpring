@@ -1,11 +1,14 @@
 package com.example.service;
 
-import com.example.repos.CompanyRepository;
+import com.example.database.entity.Company;
+import com.example.database.repos.CRUDRepository;
+import com.example.database.repos.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
+@Service
+@RequiredArgsConstructor
 public class UserService {
-    private final CompanyRepository companyRepository;
-
-    public UserService(CompanyRepository companyRepository) {
-        this.companyRepository = companyRepository;
-    }
+    private final UserRepository userRepository;
+    private final CRUDRepository<Integer, Company> companyRepository;
 }
